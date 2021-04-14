@@ -2,26 +2,13 @@
 
 ## Set up the host
 
-These are instructions for setting up an Ubuntu host. For other distributions please visit: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#install-guide
+Install docker: https://docs.docker.com/engine/install/ubuntu/
 
-Add NVIDIA's APT repository for Docker packages:
-```shell
-distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
-   && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
-   && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
-curl -s -L https://nvidia.github.io/nvidia-container-runtime/experimental/$distribution/nvidia-container-runtime.list | sudo tee /etc/apt/sources.list.d/nvidia-container-runtime.list
-sudo apt -y update
-```
+Install NVIDIA's Docker runtime: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#install-guide
 
-Install NVIDIA's docker runtime:
+Now run a quick test:
 ```shell
-sudo apt -y install nvidia-docker2
-sudo systemctl restart docker
-```
-
-Run a quick test:
-```shell
-docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
+sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
 ```
 You should see something like this:
 ```shell
@@ -51,9 +38,10 @@ You should see something like this:
 ```shell
 ETH_WALLET="YOUR_WALLET_ADDRESS"
 WORKERNAME="NAME_FOR_THIS_WORKER"
-docker run -p 8080:8080 --rm --gpus all docker-ethminer --tstart 60 --tstop 90 \
-                        --exit \
-                        --cuda --HWMON 3 \
+sudo docker run -p 8080:8080 --rm --gpus all docker-ethminer \
+                        --tstart 60 --tstop 90 \ # temperature control
+                        --exit \                 # exit on error
+                        --HWMON 3 \              # full gpu monitoring
                         --pool stratum+tls://${ETH_WALLET}.${WORKERNAME}@us1.ethermine.org:5555
 ```
 
