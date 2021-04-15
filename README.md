@@ -41,7 +41,7 @@ WORKERNAME="NAME_FOR_THIS_WORKER"
 sudo docker run -p 8080:8080 --rm --gpus all docker-ethminer \
                         --tstart 60 --tstop 90 \ # temperature control
                         --exit \                 # exit on error
-                        --HWMON 3 \              # full gpu monitoring
+                        --HWMON 2 \              # full gpu monitoring
                         --pool stratum+tls://${ETH_WALLET}.${WORKERNAME}@us1.ethermine.org:5555
 ```
 
