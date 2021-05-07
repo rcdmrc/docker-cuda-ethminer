@@ -3,7 +3,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt -y update 
 RUN apt -y install build-essential cmake git libdbus-1-dev mesa-common-dev
 RUN git clone https://github.com/Microsoft/vcpkg -b 2021.04.30
-RUN vcpkg/bootstrap-vcpkg.sh -disdableMetrics
+RUN vcpkg/bootstrap-vcpkg.sh -disableMetrics
 RUN vcpkg/vcpkg install boost-system boost-filesystem boost-thread jsoncpp
 RUN git clone https://github.com/rcdmrc/ethminer.git
 WORKDIR /ethminer
