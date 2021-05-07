@@ -2,6 +2,7 @@ FROM nvidia/cuda:11.0-devel as builder
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt -y update 
 RUN apt -y install build-essential cmake git libdbus-1-dev mesa-common-dev
+RUN apt -y install curl zip unzip tar
 RUN git clone https://github.com/Microsoft/vcpkg -b 2021.04.30
 RUN vcpkg/bootstrap-vcpkg.sh -disableMetrics
 RUN vcpkg/vcpkg install boost-system boost-filesystem boost-thread jsoncpp
